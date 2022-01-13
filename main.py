@@ -11,16 +11,7 @@ discordURL = "https://discord.com/api/webhooks/931087642039287867/8XRycawHFYaUgF
 # User input
 chartPeriod = "600d"
 interval = "1h"
-rsiPeriod = 14
-buyLimit = 50
-sellLimit = 65
 emaLength1 = 400
-bbands1 = []
-bbands2 = []
-bollLength1 = None
-bollLength2 = None
-std1 = None
-std2 = None
 buys = []
 sells = []
 inPosition = False
@@ -33,9 +24,7 @@ leverage = 2
 # Market data
 
 prices = []
-rsi = []
 ema1 = []
-ema2 = []
 df = pd.DataFrame()
 df = df.ta.ticker("^VIX", period=chartPeriod, interval=interval)
 
@@ -71,7 +60,7 @@ def EMA1(ema1, df):
         ema1 += [df[i]]
 
 
-def trade(prices,rsi,ema1,ema2, buyPrice, sellPrice, balance, percentage, leverage):
+def trade(prices,ema1, buyPrice, sellPrice, balance, percentage, leverage):
     global inPosition
     if not inPosition:
         if prices[-1] < ema1[-1]:
@@ -101,4 +90,4 @@ talk()
 while True:
     price(prices, df)
     EMA1(ema1, df)
-    trade(prices,rsi,ema1,ema2,buyPrice,sellPrice, balance, percentage, leverage)
+    trade(prices,ema1,buyPrice,sellPrice, balance, percentage, leverage)
